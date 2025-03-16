@@ -1,37 +1,22 @@
 #include "ladder.h"
 #include <cstdlib>
 
-bool is_adjacent(const string& word1, const string& word2) {
-    //If word lengths differ by anything greater than one character
-    if (abs(word1.length() - word2.length()) > 1) return false;
-
-    //This is pretty simple, if the strings are the same length, we 
-    //simply iterate through the string keeping track of different
-    //characters and if the number of different characters exceeds
-    //one then we can return false, otherwise return true.
-    if (word1.length() == word2.length()) {
-        int dif = 0;
+bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
+    int dif = 0;
+    if (str1.length() == str2.length()) {
         for (int i=0; i < word1.length(); i++) {
-            if (word1[i] != word2[i]) ++dif;
-            if (dif > 1) return false;
+            if (str1[i] != str2[i]) ++dif;
         }
-        return dif == 1;
     }
-    //Iterate through both strings. When we get to the characters that don't mach
-    //up we check if this is the first occurence. If it is we set foundDifference to
-    //true and we iterate i for the greater string. Then we continue checking. If there
-    //is more than once occurence of differing chars we return false. 
     else {
-        string greater = word1.length() > word2.length() ? word1 : word2;
-        string lesser = word1.length() < word2.length() ? word1 : word2;
-
-        int i = 0, j = 0;
-        bool foundDifference = false;
+        string greater = str1.length() > str2.length() ? str1 : str2;
+        string lesser = str1.length() < str2.length() ? str1 : str2;
         
+        int i=0, j=0;
         while (i < greater.length() && j < lesser.length()) {
-            if (greater[i] != lesser[j]) {
-                if (foundDifference) return false;
-                foundDifference = true;
+            if (greater[i] != greater[j]) {
+                if (dif >= 1) return false;
+                ++dif;
                 ++i;
             }
             else {
@@ -39,7 +24,25 @@ bool is_adjacent(const string& word1, const string& word2) {
                 ++j;
             }
         }
-        return true;
+    }
+    return dif == 1;
+}
+
+bool is_adjacent(const string& word1, const string& word2) {
+    return edit_distance_within(word1, word2, 1);
+}
+
+void load_words(set<string> & word_list, const string& file_name) {
+    ifstream in(file_name);
+    if (!in) {
+        //Replace by caling error function
+        cerr << "Error opening file: " << file_name << endl;
+        return;
+    }
+    else {
+        while (in >> word) {
+            word_list.insert(word);
+        }
     }
 }
 
