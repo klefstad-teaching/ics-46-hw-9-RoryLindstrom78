@@ -29,7 +29,7 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
             }
         }
     }
-    return dif == 1;
+    return dif <= 1;
 }
 
 bool is_adjacent(const string& word1, const string& word2) {
@@ -84,10 +84,16 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
 }
 
 void print_word_ladder(const vector<string>& ladder) {
-    for (auto word : ladder) {
-        cout << word << " ";
+    if (ladder.size() > 0) {
+        cout << "Word ladder found: ";
+        for (auto word : ladder) {
+            cout << word << " ";
+        }
+        cout << endl;
     }
-    cout << endl;
+    else {
+        cout << "No word ladder found." << endl;
+    }
 }
 
 #define my_assert(e) {cout << #e << ((e) ? " passed" : " failed") << endl;}
