@@ -1,6 +1,9 @@
 #include "ladder.h"
 #include <cstdlib>
 
+void error(string word1, string word2, string msg) {
+    cout << msg << " " << word1 << " " << word2 << endl;
+}
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
     int dif = 0;
@@ -86,3 +89,4 @@ void print_word_ladder(const vector<string>& ladder) {
     }
     cout << endl;
 }
+
