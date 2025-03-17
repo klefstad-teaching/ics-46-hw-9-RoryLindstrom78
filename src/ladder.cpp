@@ -5,7 +5,7 @@
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
     int dif = 0;
     if (str1.length() == str2.length()) {
-        for (int i=0; i < word1.length(); i++) {
+        for (int i=0; i < str1.length(); i++) {
             if (str1[i] != str2[i]) ++dif;
         }
     }
@@ -15,7 +15,7 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
         
         int i=0, j=0;
         while (i < greater.length() && j < lesser.length()) {
-            if (greater[i] != greater[j]) {
+            if (greater[i] != lesser[j]) {
                 if (dif >= 1) return false;
                 ++dif;
                 ++i;
@@ -41,6 +41,7 @@ void load_words(set<string> & word_list, const string& file_name) {
         return;
     }
     else {
+        string word;
         while (in >> word) {
             word_list.insert(word);
         }
@@ -77,4 +78,11 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
     }
 
     return {};
+}
+
+void print_word_ladder(const vector<string>& ladder) {
+    for (auto word : ladder) {
+        cout << word << " ";
+    }
+    cout << endl;
 }
