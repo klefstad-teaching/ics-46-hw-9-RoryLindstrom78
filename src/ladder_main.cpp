@@ -2,6 +2,6 @@
 
 int main() {
     //verify_word_ladder();
-    cout << is_adjacent("apple", "appl") << endl;
+    cout << is_adjacent("apple", "app") << endl;
     return 0;
 } 
